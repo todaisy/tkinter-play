@@ -43,23 +43,25 @@ def move_wrap(obj, move_x, move_y):
     if xy[1] >= HEIGHT:
         canvas.move(obj, 0, -HEIGHT)
 
-    # вывод координат по врагу и кругу
+    # вывод координат по игроку и кругу
     # print('x1', canvas.bbox(player)[0], canvas.bbox(ball)[0])
     # print('y1', canvas.bbox(player)[1], canvas.bbox(ball)[1])
     # print('x2', canvas.bbox(player)[0] + 30, canvas.bbox(ball)[2])
     # print('y2', canvas.bbox(player)[1] + 50, canvas.bbox(ball)[3])
+
+    # вывод координат по игроку и врагу
+    print('x1', canvas.bbox(player)[0], canvas.bbox(enemy)[0])
+    print('y1', canvas.bbox(player)[1], canvas.bbox(enemy)[1])
+    print('x2', canvas.bbox(player)[2], canvas.bbox(enemy)[2])
+    print('y2', canvas.bbox(player)[3], canvas.bbox(enemy)[3])
 
     # сравнение координат игрока и круга, если объекты соприкасаются - ты выиграл
     if ((canvas.bbox(player)[0] >= canvas.bbox(ball)[0] and canvas.bbox(player)[1] >= canvas.bbox(ball)[1]) and
     (canvas.bbox(player)[0] + 30 <= canvas.bbox(ball)[2] and canvas.bbox(player)[1] + 50 <= canvas.bbox(ball)[3])):
         messagebox.showinfo('Победа', 'Ты выиграл!')
 
-    print('x1', canvas.bbox(player)[0], canvas.bbox(enemy)[0])
-    print('y1', canvas.bbox(player)[1], canvas.bbox(enemy)[1])
-    print('x2', canvas.bbox(player)[2], canvas.bbox(enemy)[2])
-    print('y2', canvas.bbox(player)[3], canvas.bbox(enemy)[3])
-
-    if (((canvas.bbox(player)[0] >= canvas.bbox(enemy)[0] and canvas.bbox(player)[1] + 20 >= canvas.bbox(enemy)[1]) and
+    # сравнение координат игрока и врага, если объекты соприкасаются - ты проиграл
+    elif (((canvas.bbox(player)[0] >= canvas.bbox(enemy)[0] and canvas.bbox(player)[1] + 20 >= canvas.bbox(enemy)[1]) and
     (canvas.bbox(player)[2] <= canvas.bbox(enemy)[2] + 30 and canvas.bbox(player)[3] - 20 <= canvas.bbox(enemy)[3])) or
         ((canvas.bbox(player)[0] >= canvas.bbox(enemy)[0] - 30 and canvas.bbox(player)[1] + 20 >= canvas.bbox(enemy)[1]) and
     (canvas.bbox(player)[2] <= canvas.bbox(enemy)[2] and canvas.bbox(player)[3] - 20 <= canvas.bbox(enemy)[3]))):
@@ -76,6 +78,7 @@ def key_pressed(event):
     elif event.keysym == 'D' or event.keysym == 'Right':
         move_wrap(player, step, 0)
 
+    # генерация будущего хода врага и его ход
     step_enemy = random.choice([-step*5, step*5])
     choise_1 = random.choice([step_enemy, 0])
     choise_2 = 0
